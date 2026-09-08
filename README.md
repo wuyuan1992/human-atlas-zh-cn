@@ -53,6 +53,10 @@ The optional WebMCP tools expose anatomy search and inspection in compatible bro
 
 The repository includes browser-ready geometry. Rebuilding it is optional: obtain the official BodyParts3D OBJ archive and English metadata tables, prepare the joined concepts and display-system mappings, run `scripts/convert-anatomy.py`, then `node scripts/optimize-anatomy.mjs` and `node scripts/compress-models.mjs`. Simplification uses a 0.2% relative error limit per structure.
 
+## Exercise media
+
+Training exercises for every muscle are indexed in `public/data/exercise-index.json`, built by `scripts/build-exercise-index.mjs` from the curated bridge table `public/data/muscle-groups.json`. GIF animations and poster images load at runtime from this project's fork of the [exercises dataset](https://github.com/wuyuan1992/exercises-dataset) on GitHub (upstream: [hasaneyldrm/exercises-dataset](https://github.com/hasaneyldrm/exercises-dataset), MIT; media © Gym visual — keep the attribution). No media is bundled into builds; set `VITE_EXERCISE_MEDIA` to serve it from a CDN or object storage instead. To rebuild the index, clone the fork to `exercises-dataset/` and run `node scripts/build-exercise-index.mjs exercises-dataset`.
+
 ## Deploy
 
 Import this repository into Vercel as a Vite project. The included `vercel.json` configures `npm ci`, `npm run build`, and the `dist` output directory. It can also be served by a static host.

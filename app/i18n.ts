@@ -114,6 +114,12 @@ export const STRINGS = {
 		creditsAuthor: '在 X 上访问 @ashebytes',
 		twitterTimelineAria: '@ashebytes 的 X 时间线',
 		twitterFallback: '无法加载 X 嵌入(可能是网络受限),点击直接访问 @ashebytes。',
+		exercisesTitle: '训练动作',
+		exercisesPrimary: '主目标',
+		exercisesAll: '全部',
+		exercisesSecondaryTag: '协同',
+		exercisesLoading: '正在加载训练动作…',
+		exercisesSteps: '动作步骤',
 	},
 	en: {
 		documentTitle: 'Human Atlas',
@@ -197,6 +203,12 @@ export const STRINGS = {
 		creditsAuthor: 'Visit @ashebytes on X',
 		twitterTimelineAria: 'X timeline of @ashebytes',
 		twitterFallback: 'The X embed could not load (network restricted?). Open @ashebytes directly.',
+		exercisesTitle: 'Exercises',
+		exercisesPrimary: 'Primary',
+		exercisesAll: 'All',
+		exercisesSecondaryTag: 'Synergist',
+		exercisesLoading: 'Loading exercises…',
+		exercisesSteps: 'Steps',
 	},
 } as const;
 
