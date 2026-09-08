@@ -112,11 +112,13 @@ h1 .edition{font-family:inherit;font-weight:500;font-size:10px;letter-spacing:.0
 .exercise-list{max-height:min(56vh,560px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#b9c1c8 transparent}
 .exercise-item{border-bottom:1px solid #1825360d}
 .exercise-item:last-child{border-bottom:0}
-.exercise-row{display:flex;width:100%;gap:10px;align-items:center;min-height:56px;padding:7px 0;text-align:left}
+.exercise-row{display:flex;width:100%;gap:10px;align-items:center;min-height:56px;padding:4px;text-align:left}
 .exercise-thumb{width:44px;height:44px;border-radius:5px;object-fit:cover;background:#18253608;flex-shrink:0}
-.exercise-name{flex:1;min-width:0;font-size:12.5px;line-height:1.45;color:#3c4956;white-space:normal;overflow-wrap:anywhere}
-.exercise-name em{display:block;font-style:normal;font-size:11px;color:#98a2ac;line-height:1.4;overflow-wrap:anywhere}
+.exercise-name{flex:1;min-width:0;font-size:12.5px;line-height:1.45;color:#3c4956;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exercise-name em{display:block;font-style:normal;font-size:11px;color:#98a2ac;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exercise-name i{font-style:normal;font-size:10px;color:#5a7d84;margin-left:7px;white-space:nowrap}
+.exercise-detail-title{font-size:15px;line-height:1.4;color:#2d3b48;font-weight:500;margin:0;overflow-wrap:anywhere}
+.exercise-detail-title em{display:block;font-style:normal;font-size:12px;color:#8a95a1;font-weight:400;margin-top:3px;overflow-wrap:anywhere}
 .exercise-tag{font-size:10px;color:#8a95a1;border:1px solid #18253618;border-radius:3px;padding:2px 5px;flex-shrink:1;min-width:0;max-width:46%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .exercise-row svg{flex-shrink:0;color:#98a2ac;transition:transform .18s}
 .exercise-item.open .exercise-row svg{transform:rotate(90deg)}
@@ -124,4 +126,54 @@ h1 .edition{font-family:inherit;font-weight:500;font-size:10px;letter-spacing:.0
 .exercise-gif{width:100%;border-radius:8px;background:#18253606;display:block}
 .exercise-steps{margin:0;padding-left:18px;font-size:12px;line-height:1.7;color:#66727f;display:flex;flex-direction:column;gap:5px}
 .exercise-loading{font-size:11px;color:#8a95a1;padding:8px 0}
-@media(max-width:767px){.exercise-list{max-height:none}}
+/* Mobile: the list must not be a scroll container (no height cap), otherwise it swallows
+   touch gestures while overscroll-behavior:contain blocks the chain to .detail-scroll. */
+@media(max-width:767px){.exercise-list{max-height:none;overflow:visible}}
+
+/* Exercise detail: fixed-size GIF (source is 180px; stretching it wider blurs) with a fullscreen affordance. */
+.exercise-gif-wrap{position:relative;display:block;width:180px;max-width:100%;margin:0 auto;padding:0;border:0;background:none;cursor:zoom-in;border-radius:8px}
+.exercise-gif{width:180px;max-width:100%;border-radius:8px;background:#18253606;display:block}
+.exercise-zoom-icon{position:absolute;right:7px;bottom:7px;color:#5d6c7a;background:#ffffffe6;border-radius:5px;padding:4px;box-shadow:0 2px 8px #18253626}
+.exercise-detail-copy{display:flex;flex-direction:column;gap:10px;min-width:0}
+.exercise-chips{display:flex;flex-wrap:wrap;gap:5px}
+.exercise-chip{font-size:10.5px;padding:3px 9px;border:1px solid #18253620;border-radius:999px;color:#5d6c7a;background:#18253604}
+.exercise-chip.prime{border-color:#458a8560;color:#3d7a74;background:#458a8512}
+
+/* Expand/collapse toggle sits just left of the sheet's close button. */
+.detail-sheet .detail-expand{position:absolute;top:10px;right:52px;min-width:36px;min-height:36px;z-index:3}
+@media(max-width:767px){.detail-sheet .detail-expand{top:3px;right:53px;min-width:44px;min-height:44px}}
+
+/* Fullscreen detail sheet: fills the viewport, list scrolls with the sheet, and wide layouts reflow the steps into two columns. */
+.detail-sheet.is-expanded{top:12px!important;bottom:12px!important;left:12px!important;right:12px!important;width:auto!important;max-width:none!important;height:auto!important}
+.detail-sheet.is-expanded .exercise-list{max-height:none;overflow:visible}
+.detail-sheet.is-expanded .exercise-detail{flex-direction:row;align-items:flex-start;gap:22px;padding:6px 0 18px}
+.detail-sheet.is-expanded .exercise-detail .exercise-gif-wrap{margin:0;flex-shrink:0}
+.detail-sheet.is-expanded .exercise-detail .exercise-detail-copy{flex:1}
+@media(min-width:900px){.detail-sheet.is-expanded .exercise-steps{column-count:2;column-gap:32px}}
+@media(max-width:767px){.detail-sheet.is-expanded .exercise-detail{flex-direction:column;gap:12px}}
+
+/* Fullscreen: reflow the exercise list into a responsive grid; the expanded item spans all columns. */
+.detail-sheet.is-expanded .exercise-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:0 26px}
+.detail-sheet.is-expanded .exercise-item.open{grid-column:1/-1;border-bottom:1px solid #18253612}
+
+/* Mobile focus view: once an exercise is expanded, show only that exercise (and the muscle
+   title) so the small viewport is not split across unrelated content. Collapsing the
+   exercise brings everything back. */
+@media(max-width:767px){
+ .detail-sheet:has(.exercise-item.open) .exercise-item:not(.open){display:none}
+ .detail-sheet:has(.exercise-item.open) .structure-description,
+ .detail-sheet:has(.exercise-item.open) .context-note,
+ .detail-sheet:has(.exercise-item.open) .structure-meta,
+ .detail-sheet:has(.exercise-item.open) .member-list,
+ .detail-sheet:has(.exercise-item.open) .source-link,
+ .detail-sheet:has(.exercise-item.open) .detail-actions,
+ .detail-sheet:has(.exercise-item.open) .exercise-head{display:none}
+ .detail-sheet:has(.exercise-item.open) .exercise-item.open{border-bottom:0}
+}
+
+/* Mobile: the detail sheet is always fullscreen — no expand/collapse control.
+   The isolate view keeps its reduced sheet so the 3D close-up stays visible. */
+@media(max-width:767px){
+ .detail-sheet .detail-expand{display:none!important}
+ .detail-sheet:not(.is-isolated):not(.about-sheet){top:max(12px,env(safe-area-inset-top))!important;bottom:calc(12px + env(safe-area-inset-bottom))!important;left:12px!important;right:12px!important;width:auto!important;max-width:none!important;height:auto!important;max-height:none!important}
+}

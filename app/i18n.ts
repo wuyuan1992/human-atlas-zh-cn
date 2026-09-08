@@ -105,6 +105,8 @@ export const STRINGS = {
 		aboutScope2: '配色与系统分组为探索浏览而设计。几何体经过简化以适配网页,简短说明仅提供一般性学习参考。本图鉴是解剖参考工具,不用于诊断或手术。',
 		aboutSourceHeading: '数据来源',
 		aboutSourceBody: 'BodyParts3D,© 生命科学数据库中心,采用 CC BY 4.0 国际许可授权。',
+		creditsExerciseBody: '训练动作与演示动画来自开源数据集 exercises-dataset(MIT 许可;动图媒体 © Gym visual,保留署名)。',
+		creditsExerciseLink: '训练动作数据集 · GitHub',
 		aboutLicenseLink: '数据集许可',
 		aboutDataLink: '原始几何与元数据',
 		aboutPublicationLink: '阅读来源论文',
@@ -120,6 +122,9 @@ export const STRINGS = {
 		exercisesSecondaryTag: '协同',
 		exercisesLoading: '正在加载训练动作…',
 		exercisesSteps: '动作步骤',
+		detailExpand: '全屏查看',
+		detailCollapse: '退出全屏',
+		exercisesZoomHint: '点击全屏查看',
 	},
 	en: {
 		documentTitle: 'Human Atlas',
@@ -194,6 +199,8 @@ export const STRINGS = {
 		aboutScope2: 'Colors and system groupings are designed for exploration. The geometry is simplified for the web, and short explanations provide general educational context. This is an anatomical reference, not a diagnostic or surgical tool.',
 		aboutSourceHeading: 'Source',
 		aboutSourceBody: 'BodyParts3D, © The Database Center for Life Science licensed under CC Attribution 4.0 International.',
+		creditsExerciseBody: 'Exercises and demo animations come from the open-source exercises-dataset (MIT; animated media © Gym visual, attribution preserved).',
+		creditsExerciseLink: 'Exercise dataset · GitHub',
 		aboutLicenseLink: 'Dataset license',
 		aboutDataLink: 'Original geometry & metadata',
 		aboutPublicationLink: 'Read the source publication',
@@ -209,6 +216,9 @@ export const STRINGS = {
 		exercisesSecondaryTag: 'Synergist',
 		exercisesLoading: 'Loading exercises…',
 		exercisesSteps: 'Steps',
+		detailExpand: 'Expand fullscreen',
+		detailCollapse: 'Exit fullscreen',
+		exercisesZoomHint: 'Tap for fullscreen',
 	},
 } as const;
 
