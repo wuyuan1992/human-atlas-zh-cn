@@ -3,6 +3,11 @@ import {readFile} from 'node:fs/promises';
 import {createExplosionLayout} from '../app/explosion-layout.ts';
 import {PointerTap} from '../app/pointer-tap.ts';
 import {atlasTools} from '../app/agent-tools.ts';
+import {DEFAULT_VISIBLE,SYSTEMS} from '../app/anatomy.ts';
+
+// 默认可见 = 全部系统,与「全部解剖」预设一致(首次加载即选中该 tab)。
+assert.deepEqual(DEFAULT_VISIBLE,SYSTEMS.map(s=>s.id));
+console.log('Default visibility equals the all-anatomy preset (all systems on).');
 
 for (const file of ['atlas.json']) {
   const atlas=JSON.parse(await readFile(new URL(`../public/models/${file}`,import.meta.url)));

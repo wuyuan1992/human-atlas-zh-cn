@@ -16,6 +16,8 @@ function Slider({
       ? defaultValue
       : [min, max];
 
+  // center 对齐:滑块位置直接由百分比定位,不依赖挂载后的尺寸测量
+  // (edge/inset 模式在控件隐藏时挂载会测得 NaN,滑块保持 visibility:hidden 直到首次交互)。
   return (
     <SliderPrimitive.Root
       className={cn('data-horizontal:w-full data-vertical:h-full', className)}
@@ -24,7 +26,7 @@ function Slider({
       value={value}
       min={min}
       max={max}
-      thumbAlignment="edge"
+      thumbAlignment="center"
       {...props}
     >
       <SliderPrimitive.Control className="data-vertical:min-h-40 relative flex w-full touch-none items-center select-none data-disabled:opacity-50 data-vertical:h-full data-vertical:w-auto data-vertical:flex-col">

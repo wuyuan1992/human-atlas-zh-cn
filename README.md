@@ -7,9 +7,9 @@ An interactive 3D anatomy explorer built with React, Three.js, and shadcn/ui. Ta
 ## Explore
 
 - Orbit, zoom, and select structures directly on the body.
-- Toggle individual systems or use skeleton and organ presets.
+- Opens on a muscle-first view (muscles + skeleton) with muscles-only, muscle + bone, and full-anatomy presets; the 15 per-system toggles stay folded under a summary.
 - Move from assembled anatomy to a spaced inventory of every visible piece.
-- Search anatomical names and source identifiers.
+- Search anatomical names and source identifiers, including common training names, pinyin (full or initials), aggregated muscle groups, and recently viewed structures; exercise lists paginate with equipment filters.
 - Isolate a selected structure and read its details.
 - Use compact controls and detail panels on mobile.
 
