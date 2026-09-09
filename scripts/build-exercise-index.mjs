@@ -14,6 +14,8 @@ const read = p => JSON.parse(fs.readFileSync(new URL(p, root), 'utf8'));
 
 const groupsTable = read('public/data/muscle-groups.json');
 const namesZh = read('public/data/exercise-names-zh.json');
+const namesFr = read('public/data/exercise-names-fr.json');
+const namesDe = read('public/data/exercise-names-de.json');
 const atlas = read('public/models/atlas.json');
 const exercises = read(`${datasetDir}/data/exercises.json`);
 
@@ -67,22 +69,31 @@ for (const ex of exercises) {
 	const muscleGroupKeys = [...new Set([primary, ...secondaries])].filter(k => k && k !== 'undefined');
 	if (!muscleGroupKeys.some(k => groupsTable.groups[k])) unbound++;
 
+const groupEntry = name => groupsTable.groups[ALIASES[name?.toLowerCase()] ?? ''];
+const groupLocale = (name, key) => groupEntry(name)?.[key] ?? null;
+
 	slim.push({
 		id: ex.id,
 		name: ex.name,
 		nameZh: namesZh[ex.name] ?? null,
+		nameFr: namesFr[ex.name] ?? null,
+		nameDe: namesDe[ex.name] ?? null,
 		equipment: ex.equipment,
 		category: ex.category,
 		bodyPart: ex.body_part,
 		target: ex.target,
-		targetZh: groupsTable.groups[ALIASES[ex.target?.toLowerCase()] ?? '']?.zh ?? null,
-		secondary: ex.secondary_muscles ?? [],
-		secondaryZh: [...new Set(ex.secondary_muscles ?? [])].map(m => groupsTable.groups[ALIASES[m.toLowerCase()] ?? '']?.zh).filter(Boolean),
+		targetZh: groupLocale(ex.target, 'zh'),
+		targetFr: groupLocale(ex.target, 'fr'),
+		targetDe: groupLocale(ex.target, 'de'),
+		secondaryZh: [...new Set(ex.secondary_muscles ?? [])].map(m => groupLocale(m, 'zh')).filter(Boolean),
+		secondaryFr: [...new Set(ex.secondary_muscles ?? [])].map(m => groupLocale(m, 'fr')).filter(Boolean),
+		secondaryDe: [...new Set(ex.secondary_muscles ?? [])].map(m => groupLocale(m, 'de')).filter(Boolean),
 		gif: ex.gif_url,
 		image: ex.image,
 		gifBytes: mediaBytes(ex.gif_url),
 		stepsZh: ex.instruction_steps?.zh ?? [],
 		stepsEn: ex.instruction_steps?.en ?? [],
+		stepsFr: ex.instruction_steps?.fr ?? [],
 	});
 
 	for (const key of muscleGroupKeys) {
@@ -140,6 +151,8 @@ const totalBindings = Object.values(byMuscle).reduce((n, l) => n + l.length, 0);
 console.log(JSON.stringify({
 	exercises: slim.length,
 	missingNameZh: slim.filter(e => !e.nameZh).length,
+	missingNameFr: slim.filter(e => !e.nameFr).length,
+	missingNameDe: slim.filter(e => !e.nameDe).length,
 	muscleGroupsMapped: Object.keys(groupsTable.groups).length,
 	unboundExercises: unbound,
 	conceptsWithExercises: conceptsWithExercises,

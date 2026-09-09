@@ -177,3 +177,24 @@ h1 .edition{font-family:inherit;font-weight:500;font-size:10px;letter-spacing:.0
  .detail-sheet .detail-expand{display:none!important}
  .detail-sheet:not(.is-isolated):not(.about-sheet){top:max(12px,env(safe-area-inset-top))!important;bottom:calc(12px + env(safe-area-inset-bottom))!important;left:12px!important;right:12px!important;width:auto!important;max-width:none!important;height:auto!important;max-height:none!important}
 }
+
+/* Language dropdown: wrapper positions the menu under the toggle button. */
+.lang-wrap{position:relative;display:inline-flex}
+.lang-caret{opacity:.55;transition:transform .18s}
+.lang-toggle[aria-expanded=true] .lang-caret{transform:rotate(180deg)}
+/* Scoped under .lang-wrap/.lang-menu (two classes) so the .top-actions button
+   rules (one class + type) can no longer pin these controls to icon squares
+   with borders and solid backgrounds on any breakpoint. */
+.lang-wrap .lang-backdrop,.lang-wrap .lang-backdrop:hover,.lang-wrap .lang-backdrop:focus-visible{position:fixed;inset:0;z-index:59;display:block;width:100%;height:100%;background:transparent;border:0;padding:0;outline:none;cursor:default}
+/* Menu follows the atlas design language: glass surface, 44px touch rows,
+   the search-results palette, and the teal accent for the current entry.
+   Mobile sizes to its short labels so it stays proportional to the 44px trigger. */
+.lang-menu{position:absolute;top:calc(100% + 10px);right:0;z-index:60;min-width:196px;max-width:calc(100vw - 24px);padding:6px;border-radius:12px;background:#fffffff5;border:1px solid #25384a26;box-shadow:0 16px 48px #24334424;backdrop-filter:blur(20px);display:flex;flex-direction:column;animation:credits-in .18s ease}
+.lang-menu .lang-option{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;height:auto;min-height:44px;padding:0 10px 0 14px;border:0;background:none;border-radius:8px;font-size:13.5px;color:#26313c;text-align:left;letter-spacing:.01em}
+.lang-menu .lang-option:hover{background:#18253608}
+.lang-menu .lang-option.current{color:#263b48;font-weight:500}
+.lang-menu .lang-option.current svg{color:#458a85}
+@media(max-width:767px){
+ .lang-menu{min-width:132px;width:max-content;padding:5px;border-radius:11px;top:calc(100% + 12px)}
+ .lang-menu .lang-option{min-height:42px;font-size:13px;padding-right:24px}
+}

@@ -1,13 +1,14 @@
 import {useEffect, useState} from 'react';
 
-export type Locale = 'zh' | 'en';
+export type Locale = 'zh' | 'en' | 'fr' | 'de';
 const STORAGE_KEY = 'atlas-locale';
+export const LOCALES: Locale[] = ['zh', 'en', 'fr', 'de'];
 
 /** Default to Chinese; remember an explicit choice across sessions. */
 export function initialLocale(): Locale {
 	try {
 		const saved = localStorage.getItem(STORAGE_KEY);
-		if (saved === 'zh' || saved === 'en') return saved;
+		if (saved === 'zh' || saved === 'en' || saved === 'fr' || saved === 'de') return saved;
 	} catch {/* Private browsing can block storage. */}
 	return 'zh';
 }
@@ -18,10 +19,10 @@ export function useLocale() {
 		try {
 			localStorage.setItem(STORAGE_KEY, locale);
 		} catch {/* Ignore persistence failures. */}
-		document.documentElement.lang = locale === 'zh' ? 'zh-CN' : 'en';
+		document.documentElement.lang = locale === 'zh' ? 'zh-CN' : locale;
 		document.title = t(locale, 'documentTitle');
 	}, [locale]);
-	return [locale, () => setLocale(l => (l === 'zh' ? 'en' : 'zh'))] as const;
+	return [locale, setLocale] as const;
 }
 
 type ZhStrings = typeof STRINGS.zh;
@@ -220,14 +221,205 @@ export const STRINGS = {
 		detailCollapse: 'Exit fullscreen',
 		exercisesZoomHint: 'Tap for fullscreen',
 	},
+	fr: {
+		documentTitle: 'Human Atlas – Atlas anatomique 3D',
+		eyebrow: 'ANATOMIE INTERACTIVE',
+		title: 'Human Atlas',
+		identityMeta: (n: string) => `${n} pièces modélisées · BodyParts3D`,
+		searchButton: 'Trouver une structure',
+		searchAria: 'Rechercher une structure',
+		cameraControls: 'Contrôles de vue',
+		languageAria: 'Changer de langue',
+		aboutAria: 'À propos de cet atlas',
+		systemsTitle: 'Systèmes',
+		presetAll: 'Tous',
+		presetSkeleton: 'Squelette',
+		presetOrgans: 'Organes',
+		closeSystems: 'Fermer les systèmes',
+		closeSearch: 'Fermer la recherche',
+		piecesVisible: (n: string) => `${n} pièces visibles`,
+		hideAll: 'Tout masquer',
+		showOnly: (name: string) => `Afficher uniquement ${name.toLowerCase()}`,
+		showSystem: (name: string) => `Afficher ${name.toLowerCase()}`,
+		searchPlaceholder: 'Cœur, fémur, nerf crânien…',
+		searchAriaLabel: 'Rechercher des structures anatomiques nommées',
+		noResults: 'Aucune structure ne correspond.',
+		searchNoteEmpty: 'Commencez par un organe majeur, ou explorez toutes les structures nommées.',
+		searchNoteQuery: '80 résultats maximum. Affinez votre recherche.',
+		pieces: (n: number) => `${n} pièce${n > 1 ? 's' : ''}`,
+		viewAria: (v: string) => `Vue ${v}`,
+		viewThreeQuarter: 'trois-quarts',
+		viewFront: 'de face',
+		viewSide: 'de profil',
+		viewBack: 'de dos',
+		rotateAria: 'Faire pivoter',
+		pauseAria: 'Pause de la rotation',
+		resetAria: 'Réinitialiser la vue',
+		captionAssembled: 'CORPS ADULTE · HOMME',
+		captionSeparated: 'STRUCTURES SÉPARÉES',
+		captionInventory: 'INVENTAIRE ANATOMIQUE',
+		captionSelected: 'STRUCTURE SÉLECTIONNÉE',
+		explodeLabel: 'Éclater l’anatomie',
+		assembled: 'Assemblé',
+		everyPiece: 'Chaque pièce',
+		dockSystems: 'Systèmes',
+		dockReset: 'Réinit.',
+		footerOrbit: 'Glisser pour orbiter',
+		footerPan: 'Glisser pour déplacer',
+		footerZoom: 'Pincer pour zoomer',
+		footerInspect: 'Toucher pour inspecter',
+		sourceCredits: 'Sources & crédits',
+		loadingTitle: 'Préparation de l’anatomie',
+		loadingBody: (percent: number, n: string) => `Chargement de ${n} pièces`,
+		catalogueError: 'Impossible de charger le catalogue anatomique.',
+		contextLostError: 'La session 3D a été interrompue. Rechargez la page.',
+		webglError: 'Ce navigateur ne peut pas démarrer la vue 3D. Essayez un navigateur avec WebGL.',
+		reload: 'Recharger',
+		loadError: 'Impossible de charger l’anatomie.',
+		atlasFallback: 'ANATOMIE',
+		atlasReference: 'Référence atlas',
+		selectedPieces: 'Pièces sélectionnées',
+		includedStructures: 'Structures incluses',
+		andMore: (n: number) => `Et ${n} autres pièces modélisées.`,
+		viewSource: 'Voir la source anatomique',
+		isolate: 'Isoler la structure',
+		showSurrounding: 'Afficher le contexte',
+		clearSelection: 'Effacer la sélection',
+		contextNote: 'Aperçu du système · structure identifiée d’après la source',
+		aboutEyebrow: 'SOURCES & PORTÉE',
+		aboutTitle: 'Crédits & sources',
+		aboutMaleHeading: 'Homme · BodyParts3D',
+		aboutMaleBody: '2 234 maillages individuels et 3 432 concepts nommés issus d’une anatomie masculine adulte de référence.',
+		aboutScope1: 'Cette référence ne contient pas toutes les structures humaines ni leurs variantes. Un concept nommé peut regrouper plusieurs pièces ; chaque maillage source est rendu une seule fois.',
+		aboutScope2: 'Les couleurs et les groupements par système sont conçus pour l’exploration. La géométrie est simplifiée pour le web et les courtes explications fournissent un contexte éducatif général. Ceci est une référence anatomique, pas un outil de diagnostic.',
+		aboutSourceHeading: 'Source',
+		aboutSourceBody: 'BodyParts3D, © The Database Center for Life Science, sous licence CC Attribution 4.0 International.',
+		creditsExerciseBody: 'Les exercices et animations proviennent du jeu de données open source exercises-dataset (MIT ; médias animés © Gym visual, attribution conservée).',
+		creditsExerciseLink: 'Jeu de données d’exercices · GitHub',
+		aboutLicenseLink: 'Licence du jeu de données',
+		aboutDataLink: 'Géométrie et métadonnées d’origine',
+		aboutPublicationLink: 'Lire la publication source',
+		aboutProjectHeading: 'Projet d’origine & auteur',
+		creditsRepo: 'Dépôt source · GitHub',
+		creditsDemo: 'Démo du projet d’origine',
+		creditsAuthor: 'Visiter @ashebytes sur X',
+		twitterTimelineAria: 'Fil X de @ashebytes',
+		twitterFallback: 'Impossible de charger le module X (réseau restreint ?). Ouvrez @ashebytes directement.',
+		exercisesTitle: 'Exercices',
+		exercisesPrimary: 'Principal',
+		exercisesAll: 'Tous',
+		exercisesSecondaryTag: 'Synergique',
+		exercisesLoading: 'Chargement des exercices…',
+		exercisesSteps: 'Étapes',
+		detailExpand: 'Plein écran',
+		detailCollapse: 'Quitter le plein écran',
+		exercisesZoomHint: 'Toucher pour le plein écran',
+	},
+	de: {
+		documentTitle: 'Human Atlas – 3D-Anatomie-Atlas',
+		eyebrow: 'INTERAKTIVE ANATOMIE',
+		title: 'Human Atlas',
+		identityMeta: (n: string) => `${n} modellierte Teile · BodyParts3D`,
+		searchButton: 'Struktur suchen',
+		searchAria: 'Anatomie durchsuchen',
+		cameraControls: 'Ansichtssteuerung',
+		languageAria: 'Sprache wechseln',
+		aboutAria: 'Über diesen Atlas',
+		systemsTitle: 'Systeme',
+		presetAll: 'Alle',
+		presetSkeleton: 'Skelett',
+		presetOrgans: 'Organe',
+		closeSystems: 'Systeme schließen',
+		closeSearch: 'Suche schließen',
+		piecesVisible: (n: string) => `${n} Teile sichtbar`,
+		hideAll: 'Alle ausblenden',
+		showOnly: (name: string) => `Nur ${name.toLowerCase()} anzeigen`,
+		showSystem: (name: string) => `${name.toLowerCase()} anzeigen`,
+		searchPlaceholder: 'Herz, Femur, Hirnnerv…',
+		searchAriaLabel: 'Benannte anatomische Strukturen durchsuchen',
+		noResults: 'Keine Strukturen gefunden.',
+		searchNoteEmpty: 'Beginnen Sie mit einem großen Organ, oder durchsuchen Sie alle benannten Strukturen.',
+		searchNoteQuery: 'Maximal 80 Treffer. Verfeinern Sie die Suche.',
+		pieces: (n: number) => `${n} ${n === 1 ? 'Teil' : 'Teile'}`,
+		viewAria: (v: string) => `${v}-Ansicht`,
+		viewThreeQuarter: 'Dreiviertel',
+		viewFront: 'Front',
+		viewSide: 'Seite',
+		viewBack: 'Rücken',
+		rotateAria: 'Körper drehen',
+		pauseAria: 'Drehung pausieren',
+		resetAria: 'Ansicht zurücksetzen',
+		captionAssembled: 'ERWACHSENER MENSCH · MÄNNLICH',
+		captionSeparated: 'GETRENNTE STRUKTUREN',
+		captionInventory: 'ANATOMISCHES INVENTAR',
+		captionSelected: 'AUSGEWÄHLTE STRUKTUR',
+		explodeLabel: 'Anatomie aufklappen',
+		assembled: 'Zusammengefügt',
+		everyPiece: 'Jedes Teil',
+		dockSystems: 'Systeme',
+		dockReset: 'Reset',
+		footerOrbit: 'Ziehen zum Drehen',
+		footerPan: 'Ziehen zum Verschieben',
+		footerZoom: 'Pinch zum Zoomen',
+		footerInspect: 'Tippen zum Inspizieren',
+		sourceCredits: 'Quellen & Credits',
+		loadingTitle: 'Anatomie wird vorbereitet',
+		loadingBody: (percent: number, n: string) => `${n} Teile werden geladen`,
+		catalogueError: 'Der Anatomie-Katalog konnte nicht geladen werden.',
+		contextLostError: 'Die 3D-Sitzung wurde unterbrochen. Bitte neu laden.',
+		webglError: 'Dieser Browser konnte die 3D-Ansicht nicht starten. Bitte einen WebGL-fähigen Browser verwenden.',
+		reload: 'Neu laden',
+		loadError: 'Anatomie konnte nicht geladen werden.',
+		atlasFallback: 'ANATOMIE',
+		atlasReference: 'Atlas-Referenz',
+		selectedPieces: 'Ausgewählte Teile',
+		includedStructures: 'Enthaltene Strukturen',
+		andMore: (n: number) => `Und ${n} weitere modellierte Teile.`,
+		viewSource: 'Anatomische Quelle ansehen',
+		isolate: 'Struktur isolieren',
+		showSurrounding: 'Umgebung anzeigen',
+		clearSelection: 'Auswahl aufheben',
+		contextNote: 'Systemübersicht · Struktur aus der Quelle identifiziert',
+		aboutEyebrow: 'QUELLEN & UMFANG',
+		aboutTitle: 'Credits & Quellen',
+		aboutMaleHeading: 'Männlich · BodyParts3D',
+		aboutMaleBody: '2.234 einzelne Meshes und 3.432 benannte Konzepte aus einer männlichen Erwachsenen-Referenzanatomie.',
+		aboutScope1: 'Diese Referenz enthält nicht jede menschliche Struktur oder Variante. Ein benanntes Konzept kann mehrere Teile umfassen; jedes Quell-Mesh wird einmal gerendert.',
+		aboutScope2: 'Farben und Systemgruppierungen sind für die Exploration konzipiert. Die Geometrie ist für das Web vereinfacht, und kurze Erläuterungen liefern allgemeinen Bildungskontext. Dies ist eine anatomische Referenz, kein Diagnosewerkzeug.',
+		aboutSourceHeading: 'Quelle',
+		aboutSourceBody: 'BodyParts3D, © The Database Center for Life Science, lizenziert unter CC Attribution 4.0 International.',
+		creditsExerciseBody: 'Übungen und Demo-Animationen stammen aus dem Open-Source-Datensatz exercises-dataset (MIT; animierte Medien © Gym visual, Attribution bleibt erhalten).',
+		creditsExerciseLink: 'Übungs-Datensatz · GitHub',
+		aboutLicenseLink: 'Datensatz-Lizenz',
+		aboutDataLink: 'Original-Geometrie & Metadaten',
+		aboutPublicationLink: 'Quell-Publikation lesen',
+		aboutProjectHeading: 'Upstream-Projekt & Autor',
+		creditsRepo: 'Quell-Repository · GitHub',
+		creditsDemo: 'Original-Demo',
+		creditsAuthor: '@ashebytes auf X besuchen',
+		twitterTimelineAria: 'X-Timeline von @ashebytes',
+		twitterFallback: 'Die X-Einbettung konnte nicht geladen (Netzwerk eingeschränkt?). @ashebytes direkt öffnen.',
+		exercisesTitle: 'Übungen',
+		exercisesPrimary: 'Primär',
+		exercisesAll: 'Alle',
+		exercisesSecondaryTag: 'Synergist',
+		exercisesLoading: 'Übungen werden geladen…',
+		exercisesSteps: 'Schritte',
+		detailExpand: 'Vollbild',
+		detailCollapse: 'Vollbild beenden',
+		exercisesZoomHint: 'Für Vollbild tippen',
+	},
 } as const;
 
 /** Localized display name for a manifest part or concept, falling back to the English name. */
-export function localizedName(item: {name: string; 'name-zh'?: string}, locale: Locale): string {
-	return locale === 'zh' ? item['name-zh'] ?? item.name : item.name;
+export type LocalizedItem = {name: string; 'name-zh'?: string; 'name-fr'?: string; 'name-de'?: string};
+export function localizedName(item: LocalizedItem, locale: Locale): string {
+	if (locale === 'en') return item.name;
+	return item[`name-${locale}`] ?? item.name;
 }
 
 /** The other language's name, shown as a subtitle when it differs. */
-export function secondaryName(item: {name: string; 'name-zh'?: string}, locale: Locale): string {
-	return locale === 'zh' ? item.name : item['name-zh'] ?? '';
+export function secondaryName(item: LocalizedItem, locale: Locale): string {
+	if (locale === 'en') return item['name-zh'] ?? '';
+	return item.name;
 }

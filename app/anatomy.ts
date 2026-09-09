@@ -18,11 +18,35 @@ export const SYSTEMS: {id:SystemId;name:string;nameZh:string;color:string;descri
  {id:'integumentary',name:'Body surface',nameZh:'体被',color:'#ba9b7d',description:'The body surface provides an outer anatomical reference. The integumentary system forms a protective barrier and contributes to sensation and temperature regulation.',descriptionZh:'体被提供外层解剖参照,构成保护屏障并参与感觉和体温调节。'},
  {id:'connective',name:'Connective tissue',nameZh:'结缔组织',color:'#aec3bb',description:'Cartilage, ligaments, and other connective tissues support, connect, and separate structures. Their roles include stabilizing joints and distributing mechanical loads.',descriptionZh:'软骨、韧带等结缔组织起支持、连接和分隔作用,能稳定关节并分散力学负荷。'},
 ];
-export function systemName(system: {name:string;nameZh:string}, locale: Locale): string {
-	return locale === 'zh' ? system.nameZh : system.name;
+const SYSTEM_I18N: Record<SystemId,{fr:string;de:string;descriptionFr:string;descriptionDe:string}> = {
+ skeletal:{fr:'Squelette',de:'Skelett',descriptionFr:'Les os forment l’ossature du corps, protègent les organes et servent de points d’attache aux muscles. L’os stocke aussi des minéraux et produit les cellules sanguines.',descriptionDe:'Knochen bilden das Stützgerüst des Körpers, schützen Organe und bieten Muskeln Ansatzpunkte. Das Knochengewebe speichert Mineralien und bildet Blutzellen.'},
+ muscular:{fr:'Muscles',de:'Muskeln',descriptionFr:'Les muscles squelettiques produisent le mouvement en tirant sur leurs attaches. Avec les tendons, ils mobilisent les articulations, stabilisent la posture et produisent de la chaleur.',descriptionDe:'Die Skelettmuskeln erzeugen Bewegung, indem sie an ihren Ansätzen ziehen. Zusammen mit den Sehnen bewegen sie Gelenke, stabilisieren die Haltung und produzieren Wärme.'},
+ cardiac:{fr:'Cœur',de:'Herz',descriptionFr:'Le cœur est une pompe musculaire à quatre cavités. Ses valvules dirigent le sang vers les circulations pulmonaire et systémique.',descriptionDe:'Das Herz ist eine muskuläre Pumpe mit vier Kammern. Seine Klappen lenken das Blut durch den Lungen- und den Körperkreislauf.'},
+ sensory:{fr:'Organes des sens',de:'Sinnesorgane',descriptionFr:'Ces structures contribuent aux sens spéciaux — vue, ouïe, équilibre. Leurs tissus spécialisés détectent les stimulus et travaillent avec le système nerveux.',descriptionDe:'Diese Strukturen dienen den besonderen Sinnen — Sehen, Hören, Gleichgewicht. Ihre spezialisierten Gewebe erfassen Reize und arbeiten mit dem Nervensystem zusammen.'},
+ arterial:{fr:'Artères',de:'Arterien',descriptionFr:'Le cœur propulse le sang dans la circulation. Les artères l’éloignent du cœur pour irriguer les tissus — ou vers les poumons dans le circuit pulmonaire.',descriptionDe:'Das Herz treibt das Blut durch den Kreislauf. Arterien führen es vom Herzen zu den Geweben — im Lungenkreislauf zur Lunge.'},
+ venous:{fr:'Veines',de:'Venen',descriptionFr:'Les veines ramènent le sang vers le cœur. Les réseaux superficiels et profonds collectent le sang des tissus ; les veines pulmonaires rapportent le sang oxygéné.',descriptionDe:'Venen führen das Blut zum Herzen zurück. Oberflächliche und tiefe Netze sammeln es aus den Geweben; die Lungenvenen bringen sauerstoffreiches Blut zurück.'},
+ nervous:{fr:'Système nerveux',de:'Nervensystem',descriptionFr:'Le cerveau, la moelle épinière et les nerfs périphériques véhiculent et traitent les signaux : sensation, mouvement, coordination et régulation automatique.',descriptionDe:'Gehirn, Rückenmark und periphere Nerven leiten und verarbeiten Signale: Empfindung, Bewegung, Koordination und automatische Regulation.'},
+ respiratory:{fr:'Système respiratoire',de:'Atmungssystem',descriptionFr:'Les voies aériennes conduisent l’air vers les poumons, où oxygène et gaz carbonique s’échangent ; la respiration repose sur les muscles respiratoires.',descriptionDe:'Die Atemwege führen Luft in die Lungen, wo Sauerstoff und Kohlendioxid ausgetauscht werden; die Atmung beruht auf der Atemmuskulatur.'},
+ digestive:{fr:'Système digestif',de:'Verdauungssystem',descriptionFr:'Le tube digestif décompose les aliments, absorbe nutriments et eau, et fait avancer les déchets ; les glandes annexes fournissent bile et enzymes.',descriptionDe:'Der Verdauungstrakt zersetzt Nahrung, absorbiert Nährstoffe und Wasser und transportiert Abfälle weiter; Anhangsdrüsen liefern Galle und Enzyme.'},
+ urinary:{fr:'Système urinaire',de:'Harnsystem',descriptionFr:'Les reins filtrent le sang et régulent liquides, électrolytes et équilibre acido-basique ; l’urine rejoint la vessie puis s’évacue par l’urètre.',descriptionDe:'Die Nieren filtern das Blut und regulieren Flüssigkeit, Elektrolyte und Säure-Basen-Haushalt; der Urin gelangt über die Harnleiter in die Blase.'},
+ lymphatic:{fr:'Système lymphatique',de:'Lymphsystem',descriptionFr:'Les vaisseaux lymphatiques ramènent le liquide tissulaire vers la circulation ; les ganglions et organes lymphoïdes soutiennent la surveillance immunitaire.',descriptionDe:'Lymphgefäße führen Gewebeflüssigkeit zurück in den Kreislauf; Lymphknoten und lymphatische Organe unterstützen die Immunüberwachung.'},
+ endocrine:{fr:'Système endocrinien',de:'Endokrines System',descriptionFr:'Les glandes endocrines libèrent des hormones dans le sang pour coordonner métabolisme, croissance, stress et reproduction.',descriptionDe:'Endokrine Organe setzen Hormone ins Blut frei und koordinieren Stoffwechsel, Wachstum, Stressreaktionen und Fortpflanzung.'},
+ reproductive:{fr:'Système reproducteur',de:'Fortpflanzungssystem',descriptionFr:'Les structures reproductives masculines représentées ici participent à la production, la maturation et le transport des spermatozoïdes, ainsi qu’aux hormones sexuelles.',descriptionDe:'Die hier dargestellten männlichen Fortpflanzungsstrukturen dienen der Produktion, Reifung und dem Transport von Spermien sowie der Geschlechtshormone.'},
+ integumentary:{fr:'Surface du corps',de:'Körperoberfläche',descriptionFr:'La surface du corps sert de repère anatomique externe. Le tégument forme une barrière protectrice et participe à la sensation et à la thermorégulation.',descriptionDe:'Die Körperoberfläche dient als äußere anatomische Referenz. Die Haut bildet eine Schutzbarriere und trägt zu Empfindung und Wärmeregulation bei.'},
+ connective:{fr:'Tissu conjonctif',de:'Bindegewebe',descriptionFr:'Cartilage, ligaments et autres tissus conjonctifs soutiennent, relient et séparent les structures ; ils stabilisent les articulations et répartissent les charges.',descriptionDe:'Knorpel, Bänder und anderes Bindegewebe stützen, verbinden und trennen Strukturen; sie stabilisieren Gelenke und verteilen Lasten.'},
+};
+export function systemName(system: {id:SystemId;name:string;nameZh:string}, locale: Locale): string {
+	if (locale === 'zh') return system.nameZh;
+	if (locale === 'en') return system.name;
+	return SYSTEM_I18N[system.id][locale];
 }
-export interface Part {id:string;name:string;'name-zh'?:string;conceptId:string;system:SystemId;chunk:number;positions:number;normals:number;indices:number;vertexCount:number;indexCount:number;bounds:[number[],number[]]}
-export interface Concept {id:string;name:string;'name-zh'?:string;elements:string[]}
+export function systemDescription(system: {id:SystemId;description:string;descriptionZh:string}, locale: Locale): string {
+	if (locale === 'zh') return system.descriptionZh;
+	if (locale === 'en') return system.description;
+	return SYSTEM_I18N[system.id][locale === 'fr' ? 'descriptionFr' : 'descriptionDe'];
+}
+export interface Part {id:string;name:string;'name-zh'?:string;'name-fr'?:string;'name-de'?:string;conceptId:string;system:SystemId;chunk:number;positions:number;normals:number;indices:number;vertexCount:number;indexCount:number;bounds:[number[],number[]]}
+export interface Concept {id:string;name:string;'name-zh'?:string;'name-fr'?:string;'name-de'?:string;elements:string[]}
 export interface Atlas {version:string;sex?:'male';source?:string;scope?:string;parts:Part[];concepts:Concept[];chunks:{url:string;bytes:number;gzip?:string;gzipBytes?:number}[];triangles:number}
 export type View = 'three-quarter'|'front'|'back'|'side';
 export interface SceneState {inspectorOpen?:boolean;explode:number;visible:SystemId[];selected:string[];isolate:boolean;view:View;rotate:boolean;reset:number}
@@ -49,4 +73,26 @@ export const EXPLANATIONS_ZH:Record<string,string> = {
  'trachea':'连接喉与支气管的主气道。软骨支架在呼吸时保持气道通畅。',
  'diaphragm':'分隔胸腔与腹腔的宽阔肌肉。收缩时增大胸腔容积,帮助吸入空气。',
 };
-export function explanation(name:string,system:SystemId,locale:Locale){const key=name.toLowerCase();const text=locale==='zh'?EXPLANATIONS_ZH[key]:EXPLANATIONS[key];if(text)return text;const s=SYSTEMS.find(x=>x.id===system);return s?(locale==='zh'?s.descriptionZh:s.description):'';}
+export const EXPLANATIONS_FR:Record<string,string> = {
+ 'heart':'Une pompe musculaire dans le thorax. Son côté droit envoie le sang vers les poumons ; son côté gauche vers la circulation systémique.',
+ 'liver':'Un grand organe sous la partie droite du diaphragme. Il traite les nutriments absorbés, produit la bile et synthétise de nombreuses protéines sanguines.',
+ 'brain':'L’organe central du système nerveux. Ses régions interconnectées soutiennent perception, mouvement, mémoire, langage et régulation des fonctions vitales.',
+ 'stomach':'Une poche musculaire entre l’œsophage et l’intestin grêle. Elle stocke et mélange les aliments avec acide et enzymes avant de les relâcher dans le duodénum.',
+ 'spleen':'Un organe lymphoïde dans la partie gauche supérieure de l’abdomen. Il filtre le sang, élimine les vieilles cellules sanguines et participe aux réponses immunitaires.',
+ 'pancreas':'Un organe abdominal aux rôles digestif et endocrinien. Il fournit des enzymes à l’intestin grêle et libère des hormones dont l’insuline et le glucagon.',
+ 'urinary bladder':'Un réservoir musculaire du bassin qui stocke l’urine venue des reins par les uretères.',
+ 'trachea':'La voie aérienne principale reliant le larynx aux bronches. Ses anneaux cartilagineux maintiennent la voie ouverte pendant la respiration.',
+ 'diaphragm':'Un large muscle séparant thorax et abdomen. En se contractant, il augmente le volume thoracique et aide à inspirer l’air.',
+};
+export const EXPLANATIONS_DE:Record<string,string> = {
+ 'heart':'Eine muskuläre Pumpe in der Brust. Ihre rechte Seite sendet das Blut zur Lunge; die linke in den Körperkreislauf.',
+ 'liver':'Ein großes Organ unter der rechten Zwerchfellkuppel. Es verarbeitet aufgenommene Nährstoffe, produziert Galle und synthetisiert viele Bluteiweiße.',
+ 'brain':'Das Zentralorgan des Nervensystems. Seine vernetzten Regionen tragen Wahrnehmung, Bewegung, Gedächtnis, Sprache und die Regulation Körperfunktionen.',
+ 'stomach':'Eine muskuläre Kammer zwischen Speiseröhre und Dünndarm. Sie speichert Nahrung, mischt sie mit Säure und Enzymen und gibt sie ans Duodenum ab.',
+ 'spleen':'Ein lymphatisches Organ im linken Oberbauch. Es filtert Blut, entfernt gealterte Blutzellen und beteiligt sich an Immunantworten.',
+ 'pancreas':'Ein Bauchorgan mit Verdauungs- und Hormonfunktion. Es liefert Enzyme an den Dünndarm und setzt Hormone wie Insulin und Glucagon frei.',
+ 'urinary bladder':'Ein muskuläres Reservoir im Becken, das den von den Nieren kommenden Urin speichert.',
+ 'trachea':'Die Hauptluftwege zwischen Kehlkopf und Bronchien. Ihre Knorpelspangen halten die Atemwege offen.',
+ 'diaphragm':'Ein breiter Muskel zwischen Brust und Bauch. Seine Kontraktion vergrößert das Brustvolumen und hilft beim Einatmen.',
+};
+export function explanation(name:string,system:SystemId,locale:Locale){const key=name.toLowerCase();const table:Record<string,string>|undefined=locale==='zh'?EXPLANATIONS_ZH:locale==='fr'?EXPLANATIONS_FR:locale==='de'?EXPLANATIONS_DE:EXPLANATIONS;const text=table?.[key];if(text)return text;const s=SYSTEMS.find(x=>x.id===system);return s?systemDescription(s,locale):'';}

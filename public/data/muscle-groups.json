@@ -1,152 +1,401 @@
 {
-	"version": 1,
-	"description": "肌群 → atlas FMA 概念桥接表。concepts 中的概念在 3D 上高亮/选中时,可反查该肌群的所有训练动作。BodyParts3D 对部分大肌肉只建了分段概念(如肱二头肌的长/短头),此时绑定全部分段;个别未建模肌肉以功能最接近的结构代表,见 note。",
-	"groups": {
-		"abs": {
-			"en": "Abdominals", "zh": "腹部肌群",
-			"concepts": ["FMA13335"],
-			"note": "模型仅含腹外斜肌;腹直肌、腹内斜肌、腹横肌未建模"
-		},
-		"obliques": {
-			"en": "Obliques", "zh": "腹斜肌",
-			"concepts": ["FMA13335"]
-		},
-		"core": {
-			"en": "Core", "zh": "核心肌群",
-			"concepts": ["FMA13335", "FMA77179", "FMA22709", "FMA22702"]
-		},
-		"chest": {
-			"en": "Chest", "zh": "胸肌",
-			"concepts": ["FMA34686", "FMA13109"]
-		},
-		"upper-chest": {
-			"en": "Upper chest", "zh": "上胸部",
-			"concepts": ["FMA34687"]
-		},
-		"lats": {
-			"en": "Lats", "zh": "背阔肌",
-			"concepts": ["FMA32549"],
-			"note": "背阔肌未建模;大圆肌为其协同肌,功能相近(划船、引体类动作均显著参与)"
-		},
-		"upper-back": {
-			"en": "Upper back", "zh": "上背部",
-			"concepts": ["FMA32555", "FMA32556", "FMA32557", "FMA13379", "FMA13380", "FMA32519", "FMA32549"]
-		},
-		"rhomboids": {
-			"en": "Rhomboids", "zh": "菱形肌",
-			"concepts": ["FMA13379", "FMA13380"]
-		},
-		"traps": {
-			"en": "Trapezius", "zh": "斜方肌",
-			"concepts": ["FMA32555", "FMA32556", "FMA32557"]
-		},
-		"shoulders": {
-			"en": "Shoulders", "zh": "三角肌",
-			"concepts": ["FMA34676"]
-		},
-		"rear-deltoids": {
-			"en": "Rear delts", "zh": "三角肌后束",
-			"concepts": ["FMA34679"]
-		},
-		"rotator-cuff": {
-			"en": "Rotator cuff", "zh": "肩袖肌群",
-			"concepts": ["FMA9629", "FMA32546", "FMA32550", "FMA13413"]
-		},
-		"serratus-anterior": {
-			"en": "Serratus anterior", "zh": "前锯肌",
-			"concepts": ["FMA13397"]
-		},
-		"levator-scapulae": {
-			"en": "Levator scapulae", "zh": "肩胛提肌",
-			"concepts": ["FMA32519"]
-		},
-		"biceps": {
-			"en": "Biceps", "zh": "肱二头肌",
-			"concepts": ["FMA37682", "FMA37683"]
-		},
-		"brachialis": {
-			"en": "Brachialis", "zh": "肱肌",
-			"concepts": ["FMA37667"]
-		},
-		"triceps": {
-			"en": "Triceps", "zh": "肱三头肌",
-			"concepts": ["FMA37692", "FMA37693", "FMA37694"]
-		},
-		"forearms": {
-			"en": "Forearms", "zh": "前臂肌群",
-			"concepts": ["FMA38485", "FMA38459", "FMA38615", "FMA38616", "FMA38462", "FMA38494", "FMA38497", "FMA38506", "FMA38469", "FMA38478", "FMA38500", "FMA38481", "FMA38521", "FMA38515", "FMA38512", "FMA38453"]
-		},
-		"wrist-flexors": {
-			"en": "Wrist flexors", "zh": "腕屈肌群",
-			"concepts": ["FMA38459", "FMA38615", "FMA38616", "FMA38462"]
-		},
-		"wrist-extensors": {
-			"en": "Wrist extensors", "zh": "腕伸肌群",
-			"concepts": ["FMA38494", "FMA38497", "FMA38506"]
-		},
-		"grip-muscles": {
-			"en": "Grip muscles", "zh": "握力肌群",
-			"concepts": ["FMA38478", "FMA38469"]
-		},
-		"quads": {
-			"en": "Quadriceps", "zh": "股四头肌",
-			"concepts": ["FMA22429", "FMA22430", "FMA22431", "FMA22432", "FMA22433"]
-		},
-		"hamstrings": {
-			"en": "Hamstrings", "zh": "腘绳肌群",
-			"concepts": ["FMA45887", "FMA45890", "FMA22357", "FMA22438"]
-		},
-		"glutes": {
-			"en": "Glutes", "zh": "臀肌",
-			"concepts": ["FMA22314", "FMA22315", "FMA22317"]
-		},
-		"abductors": {
-			"en": "Abductors", "zh": "外展肌群",
-			"concepts": ["FMA22315", "FMA22317", "FMA22423"]
-		},
-		"adductors": {
-			"en": "Adductors", "zh": "内收肌群",
-			"concepts": ["FMA22441", "FMA22442", "FMA22443", "FMA43885", "FMA43882", "FMA22440"]
-		},
-		"hip-flexors": {
-			"en": "Hip flexors", "zh": "屈髋肌群",
-			"concepts": ["FMA18060", "FMA22310", "FMA22353", "FMA22430"]
-		},
-		"calves": {
-			"en": "Calves", "zh": "小腿三头肌",
-			"concepts": ["FMA45950", "FMA22542"]
-		},
-		"soleus": {
-			"en": "Soleus", "zh": "比目鱼肌",
-			"concepts": ["FMA22542"]
-		},
-		"shins": {
-			"en": "Shins", "zh": "胫骨前肌",
-			"concepts": ["FMA22532"]
-		},
-		"ankles": {
-			"en": "Ankles", "zh": "踝部稳定肌群",
-			"concepts": ["FMA22532", "FMA51099", "FMA22539", "FMA22540"]
-		},
-		"feet": {
-			"en": "Feet", "zh": "足部肌群",
-			"concepts": ["FMA65020"]
-		},
-		"hands": {
-			"en": "Hands", "zh": "手部肌群",
-			"concepts": ["FMA42380"]
-		},
-		"lower-back": {
-			"en": "Lower back", "zh": "下背部",
-			"concepts": ["FMA77179", "FMA22709", "FMA22702", "FMA22823"]
-		},
-		"spine": {
-			"en": "Spine", "zh": "脊柱伸肌群",
-			"concepts": ["FMA77179", "FMA22709", "FMA22702", "FMA22823"]
-		},
-		"sternocleidomastoid": {
-			"en": "Sternocleidomastoid", "zh": "胸锁乳突肌",
-			"concepts": ["FMA13407"]
-		}
-	}
+ "version": 1,
+ "description": "肌群 → atlas FMA 概念桥接表。concepts 中的概念在 3D 上高亮/选中时,可反查该肌群的所有训练动作。BodyParts3D 对部分大肌肉只建了分段概念(如肱二头肌的长/短头),此时绑定全部分段;个别未建模肌肉以功能最接近的结构代表,见 note。",
+ "groups": {
+  "abs": {
+   "en": "Abdominals",
+   "zh": "腹部肌群",
+   "concepts": [
+    "FMA13335"
+   ],
+   "note": "模型仅含腹外斜肌;腹直肌、腹内斜肌、腹横肌未建模",
+   "fr": "Abdominaux",
+   "de": "Bauchmuskeln"
+  },
+  "obliques": {
+   "en": "Obliques",
+   "zh": "腹斜肌",
+   "concepts": [
+    "FMA13335"
+   ],
+   "fr": "Obliques",
+   "de": "Schräge Bauchmuskeln"
+  },
+  "core": {
+   "en": "Core",
+   "zh": "核心肌群",
+   "concepts": [
+    "FMA13335",
+    "FMA77179",
+    "FMA22709",
+    "FMA22702"
+   ],
+   "fr": "Gainage",
+   "de": "Rumpfmuskulatur"
+  },
+  "chest": {
+   "en": "Chest",
+   "zh": "胸肌",
+   "concepts": [
+    "FMA34686",
+    "FMA13109"
+   ],
+   "fr": "Pectoraux",
+   "de": "Brustmuskeln"
+  },
+  "upper-chest": {
+   "en": "Upper chest",
+   "zh": "上胸部",
+   "concepts": [
+    "FMA34687"
+   ],
+   "fr": "Haut des pectoraux",
+   "de": "Obere Brust"
+  },
+  "lats": {
+   "en": "Lats",
+   "zh": "背阔肌",
+   "concepts": [
+    "FMA32549"
+   ],
+   "note": "背阔肌未建模;大圆肌为其协同肌,功能相近(划船、引体类动作均显著参与)",
+   "fr": "Grand dorsal",
+   "de": "Latissimus"
+  },
+  "upper-back": {
+   "en": "Upper back",
+   "zh": "上背部",
+   "concepts": [
+    "FMA32555",
+    "FMA32556",
+    "FMA32557",
+    "FMA13379",
+    "FMA13380",
+    "FMA32519",
+    "FMA32549"
+   ],
+   "fr": "Haut du dos",
+   "de": "Oberer Rücken"
+  },
+  "rhomboids": {
+   "en": "Rhomboids",
+   "zh": "菱形肌",
+   "concepts": [
+    "FMA13379",
+    "FMA13380"
+   ],
+   "fr": "Rhomboïdes",
+   "de": "Rautenmuskeln"
+  },
+  "traps": {
+   "en": "Trapezius",
+   "zh": "斜方肌",
+   "concepts": [
+    "FMA32555",
+    "FMA32556",
+    "FMA32557"
+   ],
+   "fr": "Trapèze",
+   "de": "Trapezius"
+  },
+  "shoulders": {
+   "en": "Shoulders",
+   "zh": "三角肌",
+   "concepts": [
+    "FMA34676"
+   ],
+   "fr": "Deltoïdes",
+   "de": "Schultern"
+  },
+  "rear-deltoids": {
+   "en": "Rear delts",
+   "zh": "三角肌后束",
+   "concepts": [
+    "FMA34679"
+   ],
+   "fr": "Deltoïde postérieur",
+   "de": "Hinterer Deltoideus"
+  },
+  "rotator-cuff": {
+   "en": "Rotator cuff",
+   "zh": "肩袖肌群",
+   "concepts": [
+    "FMA9629",
+    "FMA32546",
+    "FMA32550",
+    "FMA13413"
+   ],
+   "fr": "Coiffe des rotateurs",
+   "de": "Rotatorenmanschette"
+  },
+  "serratus-anterior": {
+   "en": "Serratus anterior",
+   "zh": "前锯肌",
+   "concepts": [
+    "FMA13397"
+   ],
+   "fr": "Grand dentelé",
+   "de": "Vorderer Sägezmuskel"
+  },
+  "levator-scapulae": {
+   "en": "Levator scapulae",
+   "zh": "肩胛提肌",
+   "concepts": [
+    "FMA32519"
+   ],
+   "fr": "Élévateur de la scapula",
+   "de": "Schulterblattheber"
+  },
+  "biceps": {
+   "en": "Biceps",
+   "zh": "肱二头肌",
+   "concepts": [
+    "FMA37682",
+    "FMA37683"
+   ],
+   "fr": "Biceps brachial",
+   "de": "Bizeps"
+  },
+  "brachialis": {
+   "en": "Brachialis",
+   "zh": "肱肌",
+   "concepts": [
+    "FMA37667"
+   ],
+   "fr": "Brachial",
+   "de": "Oberarmmuskel"
+  },
+  "triceps": {
+   "en": "Triceps",
+   "zh": "肱三头肌",
+   "concepts": [
+    "FMA37692",
+    "FMA37693",
+    "FMA37694"
+   ],
+   "fr": "Triceps brachial",
+   "de": "Trizeps"
+  },
+  "forearms": {
+   "en": "Forearms",
+   "zh": "前臂肌群",
+   "concepts": [
+    "FMA38485",
+    "FMA38459",
+    "FMA38615",
+    "FMA38616",
+    "FMA38462",
+    "FMA38494",
+    "FMA38497",
+    "FMA38506",
+    "FMA38469",
+    "FMA38478",
+    "FMA38500",
+    "FMA38481",
+    "FMA38521",
+    "FMA38515",
+    "FMA38512",
+    "FMA38453"
+   ],
+   "fr": "Avant-bras",
+   "de": "Unterarme"
+  },
+  "wrist-flexors": {
+   "en": "Wrist flexors",
+   "zh": "腕屈肌群",
+   "concepts": [
+    "FMA38459",
+    "FMA38615",
+    "FMA38616",
+    "FMA38462"
+   ],
+   "fr": "Fléchisseurs du poignet",
+   "de": "Handgelenksbeuger"
+  },
+  "wrist-extensors": {
+   "en": "Wrist extensors",
+   "zh": "腕伸肌群",
+   "concepts": [
+    "FMA38494",
+    "FMA38497",
+    "FMA38506"
+   ],
+   "fr": "Extenseurs du poignet",
+   "de": "Handgelenksstrecker"
+  },
+  "grip-muscles": {
+   "en": "Grip muscles",
+   "zh": "握力肌群",
+   "concepts": [
+    "FMA38478",
+    "FMA38469"
+   ],
+   "fr": "Muscles de préhension",
+   "de": "Griffmuskulatur"
+  },
+  "quads": {
+   "en": "Quadriceps",
+   "zh": "股四头肌",
+   "concepts": [
+    "FMA22429",
+    "FMA22430",
+    "FMA22431",
+    "FMA22432",
+    "FMA22433"
+   ],
+   "fr": "Quadriceps",
+   "de": "Quadrizeps"
+  },
+  "hamstrings": {
+   "en": "Hamstrings",
+   "zh": "腘绳肌群",
+   "concepts": [
+    "FMA45887",
+    "FMA45890",
+    "FMA22357",
+    "FMA22438"
+   ],
+   "fr": "Ischio-jambiers",
+   "de": "Hamstrings"
+  },
+  "glutes": {
+   "en": "Glutes",
+   "zh": "臀肌",
+   "concepts": [
+    "FMA22314",
+    "FMA22315",
+    "FMA22317"
+   ],
+   "fr": "Fessiers",
+   "de": "Gesäßmuskeln"
+  },
+  "abductors": {
+   "en": "Abductors",
+   "zh": "外展肌群",
+   "concepts": [
+    "FMA22315",
+    "FMA22317",
+    "FMA22423"
+   ],
+   "fr": "Abducteurs",
+   "de": "Abduktoren"
+  },
+  "adductors": {
+   "en": "Adductors",
+   "zh": "内收肌群",
+   "concepts": [
+    "FMA22441",
+    "FMA22442",
+    "FMA22443",
+    "FMA43885",
+    "FMA43882",
+    "FMA22440"
+   ],
+   "fr": "Adducteurs",
+   "de": "Adduktoren"
+  },
+  "hip-flexors": {
+   "en": "Hip flexors",
+   "zh": "屈髋肌群",
+   "concepts": [
+    "FMA18060",
+    "FMA22310",
+    "FMA22353",
+    "FMA22430"
+   ],
+   "fr": "Fléchisseurs de la hanche",
+   "de": "Hüftbeuger"
+  },
+  "calves": {
+   "en": "Calves",
+   "zh": "小腿三头肌",
+   "concepts": [
+    "FMA45950",
+    "FMA22542"
+   ],
+   "fr": "Triceps sural",
+   "de": "Wadenmuskeln"
+  },
+  "soleus": {
+   "en": "Soleus",
+   "zh": "比目鱼肌",
+   "concepts": [
+    "FMA22542"
+   ],
+   "fr": "Soléaire",
+   "de": "Schollenmuskel"
+  },
+  "shins": {
+   "en": "Shins",
+   "zh": "胫骨前肌",
+   "concepts": [
+    "FMA22532"
+   ],
+   "fr": "Jambier antérieur",
+   "de": "Schienbeinmuskel"
+  },
+  "ankles": {
+   "en": "Ankles",
+   "zh": "踝部稳定肌群",
+   "concepts": [
+    "FMA22532",
+    "FMA51099",
+    "FMA22539",
+    "FMA22540"
+   ],
+   "fr": "Stabilisateurs de la cheville",
+   "de": "Sprunggelenkstabilisatoren"
+  },
+  "feet": {
+   "en": "Feet",
+   "zh": "足部肌群",
+   "concepts": [
+    "FMA65020"
+   ],
+   "fr": "Muscles du pied",
+   "de": "Fußmuskulatur"
+  },
+  "hands": {
+   "en": "Hands",
+   "zh": "手部肌群",
+   "concepts": [
+    "FMA42380"
+   ],
+   "fr": "Muscles de la main",
+   "de": "Handmuskulatur"
+  },
+  "lower-back": {
+   "en": "Lower back",
+   "zh": "下背部",
+   "concepts": [
+    "FMA77179",
+    "FMA22709",
+    "FMA22702",
+    "FMA22823"
+   ],
+   "fr": "Bas du dos",
+   "de": "Unterer Rücken"
+  },
+  "spine": {
+   "en": "Spine",
+   "zh": "脊柱伸肌群",
+   "concepts": [
+    "FMA77179",
+    "FMA22709",
+    "FMA22702",
+    "FMA22823"
+   ],
+   "fr": "Extenseurs du rachis",
+   "de": "Rückenstrecker"
+  },
+  "sternocleidomastoid": {
+   "en": "Sternocleidomastoid",
+   "zh": "胸锁乳突肌",
+   "concepts": [
+    "FMA13407"
+   ],
+   "fr": "Sterno-cléido-mastoïdien",
+   "de": "Kopfnicker"
+  }
+ }
 }
